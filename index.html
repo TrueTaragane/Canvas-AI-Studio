@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas AI Studio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Project Header -->
+    <header class="project-header">
+        <div class="header-left">
+            <button class="back-btn" id="backBtn">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <input type="text" class="project-title" id="projectTitle" placeholder="Проект без названия" value="Проект без названия">
+        </div>
+        <div class="header-right">
+            <div class="zoom-controls">
+                <button class="zoom-btn" onclick="app.canvasEngine.resetZoom()" title="Сбросить до 100% (Ctrl+0)">
+                    <i class="fas fa-home"></i>
+                </button>
+                <button class="zoom-btn" onclick="app.canvasEngine.zoomOut()" title="Уменьшить (Ctrl+↓)">
+                    <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="zoom-display" id="zoomDisplay" title="Нажмите для выбора масштаба">100%</button>
+                <button class="zoom-btn" onclick="app.canvasEngine.zoomIn()" title="Увеличить (Ctrl+↑)">
+                    <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="zoom-btn" onclick="app.canvasEngine.fitToScreen()" title="Вместить в экран (Ctrl+1)">
+                    <i class="fas fa-expand-arrows-alt"></i>
+                </button>
+            </div>
+            <button class="share-btn" id="shareBtn">Поделиться</button>
+        </div>
+        
+        <!-- Zoom Level Dropdown -->
+        <div class="zoom-dropdown" id="zoomDropdown" style="display: none;">
+            <div class="zoom-dropdown-content">
+                <button class="zoom-level-btn" data-zoom="0.1">10%</button>
+                <button class="zoom-level-btn" data-zoom="0.25">25%</button>
+                <button class="zoom-level-btn" data-zoom="0.33">33%</button>
+                <button class="zoom-level-btn" data-zoom="0.5">50%</button>
+                <button class="zoom-level-btn" data-zoom="0.67">67%</button>
+                <button class="zoom-level-btn" data-zoom="0.75">75%</button>
+                <button class="zoom-level-btn" data-zoom="1.0">100%</button>
+                <button class="zoom-level-btn" data-zoom="1.25">125%</button>
+                <button class="zoom-level-btn" data-zoom="1.5">150%</button>
+                <button class="zoom-level-btn" data-zoom="2.0">200%</button>
+                <button class="zoom-level-btn" data-zoom="2.5">250%</button>
+                <button class="zoom-level-btn" data-zoom="3.0">300%</button>
+                <button class="zoom-level-btn" data-zoom="4.0">400%</button>
+                <button class="zoom-level-btn" data-zoom="5.0">500%</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Left Toolbar -->
+        <aside class="toolbar" id="toolbar">
+            <div class="toolbar-section">
+                <button class="tool-btn active" id="selectTool" data-tool="select" title="Выбрать (V)">
+                    <i class="fas fa-mouse-pointer"></i>
+                </button>
+                
+                <button class="tool-btn" id="imageTool" data-tool="image" title="Добавить изображение">
+                    <i class="fas fa-image"></i>
+                </button>
+                
+                <button class="tool-btn" id="textTool" data-tool="text" title="Добавить текст (T)">
+                    <i class="fas fa-font"></i>
+                </button>
+            </div>
+            
+            <div class="toolbar-divider"></div>
+            
+            <div class="toolbar-section">
+                <button class="tool-btn" id="generateImageBtn" title="Генерировать изображение с ИИ">
+                    <i class="fas fa-magic"></i>
+                </button>
+                <button class="tool-btn" id="settingsBtn" title="Настройки API">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Canvas Container -->
+        <main class="canvas-container" id="canvasContainer">
+            <canvas id="mainCanvas" class="main-canvas"></canvas>
+            <div class="canvas-overlay" id="canvasOverlay"></div>
+            
+            <!-- AI Input Overlay -->
+            <div class="ai-input-overlay" id="aiInputOverlay">
+                <!-- Selected Images Area -->
+                <div class="ai-images-area" id="aiImagesArea" style="display: none;">
+                    <div class="ai-images-header">
+                        <span class="ai-images-title">Выбранные изображения</span>
+                        <button class="ai-clear-images" onclick="app.clearAIImages()" title="Очистить все изображения">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="ai-images-grid" id="aiImagesGrid"></div>
+                </div>
+                
+                <!-- Input Container -->
+                <div class="ai-input-container">
+                    <textarea 
+                        id="aiPromptInput" 
+                        class="ai-prompt-input" 
+                        placeholder="Опишите, что вы хотите создать или изменить с помощью ИИ...&#10;&#10;Примеры:&#10;• Сделать это изображение более красочным&#10;• Добавить текст 'Привет мир'&#10;• Создать похожий дизайн&#10;&#10;Нажмите Ctrl+Enter для отправки"
+                        rows="3"
+                    ></textarea>
+                    <button class="send-btn" id="sendPromptBtn" title="Генерировать (Ctrl+Enter)">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div class="ai-status" id="chatStatus"></div>
+            </div>
+
+            <!-- Image Context Menu -->
+            <div class="image-context-menu" id="imageContextMenu" style="display: none;">
+                <button class="context-menu-item" data-action="removeBackground" title="Убрать фон">
+                    <i class="fas fa-magic"></i>
+                </button>
+                <button class="context-menu-item" data-action="regenerate" title="Перегенерировать на основе этого">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+                <button class="context-menu-item" data-action="copy" title="Копировать (клонировать)">
+                    <i class="fas fa-copy"></i>
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Hidden File Input -->
+    <input type="file" id="fileInput" accept="image/*" multiple style="display: none;">
+
+    <!-- Scripts -->
+    <script src="js/utils.js"></script>
+    <script src="js/viewport.js"></script>
+    <script src="js/elements.js"></script>
+    <script src="js/canvas-engine.js"></script>
+    <script src="js/advanced-api-client.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

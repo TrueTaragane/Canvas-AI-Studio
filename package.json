@@ -1,0 +1,48 @@
+{
+  "name": "canvas-ai-studio",
+  "version": "1.0.0",
+  "description": "AI-powered design tool for creative professionals",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "serve": "npx serve .",
+    "dev": "python -m http.server 8000",
+    "lint": "echo 'No linting configured yet'",
+    "test": "echo 'No tests configured yet'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/canvas-ai-studio.git"
+  },
+  "keywords": [
+    "ai",
+    "design",
+    "canvas",
+    "creative",
+    "gemini",
+    "graphics",
+    "editor",
+    "web-app",
+    "javascript",
+    "html5"
+  ],
+  "author": "Canvas AI Studio Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yourusername/canvas-ai-studio/issues"
+  },
+  "homepage": "https://github.com/yourusername/canvas-ai-studio#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    "Chrome >= 90",
+    "Firefox >= 88",
+    "Safari >= 14",
+    "Edge >= 90"
+  ],
+  "devDependencies": {},
+  "dependencies": {},
+  "peerDependencies": {},
+  "optionalDependencies": {}
+}
