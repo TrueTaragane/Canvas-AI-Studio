@@ -1,0 +1,846 @@
+/* CSS Variables */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --accent-color: #e74c3c;
+    --success-color: #27ae60;
+    --warning-color: #f39c12;
+    --background-color: #ffffff;
+    --surface-color: #f8f9fa;
+    --border-color: #e1e5e9;
+    --text-color: #2c3e50;
+    --text-muted: #6c757d;
+    --shadow-light: 0 2px 4px rgba(0,0,0,0.1);
+    --shadow-medium: 0 4px 12px rgba(0,0,0,0.15);
+    --border-radius: 8px;
+    --toolbar-width: 60px;
+    --header-height: 60px;
+}
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* Project Header */
+.project-header {
+    height: var(--header-height);
+    background: var(--background-color);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    position: relative;
+    z-index: 100;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.back-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+    background: var(--surface-color);
+    color: var(--text-color);
+}
+
+.project-title {
+    border: none;
+    background: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-color);
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+    min-width: 200px;
+}
+
+.project-title:focus {
+    outline: none;
+    background: var(--surface-color);
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.zoom-controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--surface-color);
+    border-radius: 6px;
+    padding: 4px;
+}
+
+.zoom-btn {
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.zoom-btn:hover {
+    background: var(--background-color);
+    color: var(--text-color);
+}
+
+.zoom-btn i {
+    font-size: 12px;
+}
+
+.zoom-display {
+    font-size: 13px;
+    color: var(--text-color);
+    font-weight: 500;
+    min-width: 45px;
+    text-align: center;
+    padding: 0 8px;
+}
+
+.share-btn {
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.share-btn:hover {
+    background: #2980b9;
+}/* Main Container */
+.main-container {
+    height: calc(100vh - var(--header-height));
+    position: relative;
+}
+
+/* Left Toolbar */
+.toolbar {
+    width: var(--toolbar-width);
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-medium);
+    display: flex;
+    flex-direction: column;
+    padding: 12px 0;
+    gap: 8px;
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 50;
+    transition: all 0.3s ease;
+}
+
+.toolbar:hover {
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    transform: translateY(-50%) translateX(2px);
+}
+
+.toolbar-section {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0 8px;
+}
+
+.toolbar-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 8px 12px;
+}
+
+.tool-btn {
+    width: 44px;
+    height: 44px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.tool-btn:hover {
+    background: rgba(52, 152, 219, 0.1);
+    color: var(--secondary-color);
+}
+
+.tool-btn.active {
+    background: var(--secondary-color);
+    color: white;
+}
+
+.tool-btn i {
+    font-size: 16px;
+}
+
+/* Canvas Container */
+.canvas-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    background: var(--background-color);
+    cursor: crosshair;
+}
+
+.main-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: transparent;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+.canvas-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* Canvas States */
+.canvas-container.panning {
+    cursor: grabbing;
+}
+
+.canvas-container.selecting {
+    cursor: crosshair;
+}
+
+.canvas-container.dragging {
+    cursor: move;
+}
+
+.canvas-container.resizing {
+    cursor: nw-resize;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .toolbar {
+        width: 50px;
+        left: 8px;
+    }
+    
+    .tool-btn {
+        width: 38px;
+        height: 38px;
+    }
+    
+    .project-title {
+        min-width: 150px;
+        font-size: 14px;
+    }
+    
+    .header-right {
+        gap: 12px;
+    }
+}
+
+/* Utility Classes */
+.hidden {
+    display: none !important;
+}
+
+.no-select {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.pointer-events-none {
+    pointer-events: none;
+}
+
+.pointer-events-auto {
+    pointer-events: auto;
+}/* Can
+vas drag and drop states */
+.canvas-container.drag-over {
+    background: rgba(52, 152, 219, 0.1);
+    border: 2px dashed var(--secondary-color);
+}
+
+.canvas-container.drag-over::after {
+    content: 'Drop images here';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--secondary-color);
+    color: white;
+    padding: 12px 24px;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    pointer-events: none;
+    z-index: 20;
+}
+
+/* Canvas loading state */
+.canvas-container.loading::after {
+    content: 'Loading...';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--text-muted);
+    color: white;
+    padding: 12px 24px;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    pointer-events: none;
+    z-index: 20;
+}
+
+/* Canvas error state */
+.canvas-container.error::after {
+    content: 'Canvas not supported';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--accent-color);
+    color: white;
+    padding: 12px 24px;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    pointer-events: none;
+    z-index: 20;
+}
+/* AI Input Overlay */
+.ai-input-overlay {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 60;
+    width: 95%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ai-input-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    background: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: var(--shadow-medium);
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.ai-prompt-input {
+    flex: 1;
+    min-height: 60px;
+    max-height: 150px;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 15px;
+    line-height: 1.5;
+    resize: none;
+    background: transparent;
+    transition: all 0.2s ease;
+}
+
+.ai-prompt-input:focus {
+    outline: none;
+    background: rgba(52, 152, 219, 0.05);
+}
+
+.ai-prompt-input::placeholder {
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+.send-btn {
+    width: 48px;
+    height: 48px;
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    align-self: flex-end;
+}
+
+.send-btn:hover {
+    background: #2980b9;
+    transform: scale(1.05);
+}
+
+.send-btn:active {
+    transform: scale(0.95);
+}
+
+.send-btn:disabled {
+    background: var(--text-muted);
+    cursor: not-allowed;
+    transform: none;
+}
+
+.send-btn i {
+    font-size: 16px;
+}
+
+.ai-status {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    margin-bottom: 8px;
+    padding: 4px 8px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 6px;
+    backdrop-filter: blur(5px);
+}
+
+.ai-status.visible {
+    opacity: 1;
+}
+
+.ai-status.generating {
+    color: var(--secondary-color);
+}
+
+.ai-status.error {
+    color: var(--accent-color);
+}
+
+.ai-status.success {
+    color: var(--success-color);
+}
+
+/* Restore main container height */
+.main-container {
+    height: calc(100vh - var(--header-height));
+}
+
+/* Responsive AI input */
+@media (max-width: 768px) {
+    .ai-input-overlay {
+        bottom: 16px;
+        width: 98%;
+        max-width: none;
+    }
+    
+    .ai-input-container {
+        padding: 8px;
+        gap: 8px;
+    }
+    
+    .ai-prompt-input {
+        font-size: 16px; /* Prevent zoom on iOS */
+        min-height: 50px;
+        max-height: 120px;
+        padding: 10px 12px;
+    }
+    
+    .send-btn {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .send-btn i {
+        font-size: 14px;
+    }
+}/* AI
+ Images Area */
+.ai-images-area {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px;
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-medium);
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.ai-images-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.ai-images-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.ai-clear-images {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.ai-clear-images:hover {
+    background: var(--surface-color);
+    color: var(--accent-color);
+}
+
+.ai-images-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.ai-image-item {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.ai-image-item:hover {
+    border-color: var(--secondary-color);
+    transform: scale(1.05);
+}
+
+.ai-image-item.selected {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.3);
+}
+
+.ai-image-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ai-image-remove {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 20px;
+    height: 20px;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.ai-image-item:hover .ai-image-remove {
+    opacity: 1;
+}
+
+.ai-image-remove:hover {
+    background: #c0392b;
+}
+
+/* Image Context Menu */
+.image-context-menu {
+    position: absolute;
+    background: rgba(44, 62, 80, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    box-shadow: var(--shadow-medium);
+    padding: 6px;
+    z-index: 1000;
+    display: flex;
+    gap: 4px;
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    transform: translateY(-10px) scale(0.9);
+    transition: all 0.2s ease;
+    pointer-events: none;
+}
+
+.image-context-menu.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.context-menu-item {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.context-menu-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.context-menu-item:active {
+    transform: scale(0.95);
+}
+
+.context-menu-item i {
+    font-size: 14px;
+}
+
+/* Responsive AI images */
+@media (max-width: 768px) {
+    .ai-images-area {
+        max-height: 150px;
+        padding: 8px;
+    }
+    
+    .ai-image-item {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .ai-image-remove {
+        width: 18px;
+        height: 18px;
+        font-size: 10px;
+    }
+}/* 
+Zoom Dropdown */
+.zoom-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 80px;
+    z-index: 200;
+    margin-top: 4px;
+}
+
+.zoom-dropdown-content {
+    background: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    box-shadow: var(--shadow-medium);
+    padding: 4px 0;
+    min-width: 80px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.zoom-level-btn {
+    width: 100%;
+    padding: 6px 12px;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text-color);
+    transition: background-color 0.2s ease;
+}
+
+.zoom-level-btn:hover {
+    background: var(--surface-color);
+}
+
+.zoom-level-btn.active {
+    background: var(--secondary-color);
+    color: white;
+}
+
+.zoom-display {
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+.zoom-display:hover {
+    background: var(--background-color);
+}
+/*
+ Image Generation Modal Styles */
+.image-gen-modal {
+    max-width: 600px;
+    width: 95%;
+}
+
+.generation-options {
+    margin: 20px 0;
+    padding: 15px;
+    background: var(--surface-color);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+}
+
+.option-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.option-row:last-child {
+    margin-bottom: 0;
+}
+
+.option-row .form-group {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.generation-status {
+    margin: 15px 0;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: var(--border-radius);
+    border: 1px solid #e9ecef;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: #e9ecef;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--secondary-color);
+    border-radius: 3px;
+    animation: progress-animation 2s ease-in-out infinite;
+}
+
+@keyframes progress-animation {
+    0% { width: 0%; }
+    50% { width: 70%; }
+    100% { width: 100%; }
+}
+
+.status-text {
+    font-size: 14px;
+    color: var(--text-muted);
+    text-align: center;
+    display: block;
+}
+
+/* Enhanced form styles for generation modal */
+.image-gen-modal textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.image-gen-modal select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: white;
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+.image-gen-modal select:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+/* Responsive adjustments for image generation modal */
+@media (max-width: 768px) {
+    .image-gen-modal {
+        max-width: 95%;
+        margin: 10px;
+    }
+    
+    .option-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .generation-options {
+        padding: 10px;
+    }
+}
